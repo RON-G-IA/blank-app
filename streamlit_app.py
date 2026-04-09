@@ -1,54 +1,76 @@
 import streamlit as st
 
-# --- CONFIGURACIÓN DE NIVEL DIRECTOR ---
-st.set_page_config(page_title="ECD-OS v2.0 | WAR ROOM", layout="wide")
+# --- CONFIGURACIÓN DE ALTA PRIORIDAD ---
+st.set_page_config(page_title="ECD-OS v2.0 | CONTROL TÁCTICO", layout="wide")
 
-# --- DISEÑO ELITE (FONDO OSCURO Y BORDES NEÓN) ---
+# --- CSS DE INGENIERÍA DE DETALLE (LOOK DE RADAR) ---
 st.markdown("""
     <style>
-    .stApp { background-color: #000000; color: #ffffff; }
-    [data-testid="stSidebar"] { background-color: #050a18 !important; border-right: 2px solid #1e293b; }
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+    
+    .stApp { background-color: #000000; font-family: 'JetBrains Mono', monospace; }
+    [data-testid="stSidebar"] { background-color: #020617 !important; border-right: 2px solid #3b82f6; }
+    
+    /* Contenedores de KPIs estilo Búnker */
     .stMetric { 
-        background-color: #0f172a; 
-        padding: 20px; 
-        border-radius: 15px; 
-        border: 1px solid #3b82f6;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+        background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+        padding: 25px; border-radius: 5px; 
+        border: 1px solid #1e293b;
+        border-left: 10px solid #3b82f6;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
     }
-    h1, h2, h3 { color: #3b82f6 !important; font-family: 'Courier New', monospace; }
-    .stRadio > label { color: #94a3b8 !important; font-weight: bold; }
+    
+    /* Títulos con efecto de terminal */
+    h1, h2, h3 { color: #3b82f6 !important; text-transform: uppercase; letter-spacing: 2px; }
+    .status-box { 
+        padding: 10px; border: 1px solid #3b82f6; 
+        background: rgba(59, 130, 246, 0.05); color: #60a5fa;
+        font-size: 0.8rem; margin-bottom: 10px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- MENÚ DE MANDO ---
+# --- PANEL DE IDENTIDAD ---
 with st.sidebar:
-    st.title("🛡️ ECD-OS v2.0")
-    st.markdown("**DIRECTOR: R. CARBAJAL**")
+    st.markdown("<h2 style='color:white !important;'>🛡️ ECD-OS v2.0</h2>", unsafe_allow_html=True)
+    st.markdown(f"<div class='status-box'>DIRECTOR: R. CARBAJAL<br>SITE: VALLEJO HQ<br>ESTATUS: ONLINE</div>", unsafe_allow_html=True)
     st.divider()
-    tab = st.radio("NAVEGACIÓN MAESTRA", [
-        "📊 DASHBOARD / BRINCOS", "📞 MARCACIÓN", "⚡ OPERACIÓN CRM", 
+    tab = st.radio("SELECCIONAR MÓDULO", [
+        "🛰️ MONITOR GLOBAL", "📞 MARCACIÓN TÁCTICA", "⚡ OPERACIÓN CRM", 
         "🧪 LAB ESTRATEGIAS", "🏆 RANKING SITES", "🔮 PROYECCIONES IA"
     ])
 
-# --- PANTALLA PRINCIPAL: SALA DE GUERRA ---
-if tab == "📊 DASHBOARD / BRINCOS":
-    st.title("🛰️ WAR ROOM: MONITOR GLOBAL")
-    st.subheader("Control Operativo: Vallejo | Toledo | Tlalpan")
+# --- MÓDULO 1: MONITOR GLOBAL (WAR ROOM) ---
+if tab == "🛰️ MONITOR GLOBAL":
+    st.title("SISTEMA DE MANDO OPERATIVO")
     
-    # KPIs con estilo de consola
-    m1, m2, m3 = st.columns(3)
-    with m1:
-        st.metric("OBJETIVO DE RECUPERACIÓN", "$8,000,000", "Meta Abril")
-    with m2:
-        st.metric("RECUPERADO (REAL-TIME)", "$529,450", "+6.6%")
-    with m3:
-        st.metric("HONORARIOS GENERADOS", "$79,766", "Tasa 17%")
+    # Grid de Metas Principales
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.metric("RECUPERACIÓN TOTAL", "$529,450", "OBJ: $8M")
+    with m1 := st.container():
+        st.metric("AVANCE DE META", "6.62%", "TREND: +1.2%")
+    with c3:
+        st.metric("HONORARIOS (17%)", "$79,766", "ESTIMADO")
+
+    st.markdown("### 📡 ESTATUS POR SEDE")
+    s1, s2, s3 = st.columns(3)
+    
+    # Vallejo (Tu Base)
+    with s1:
+        st.info("**SEDE VALLEJO**\n\nEficiencia: 94%\n\nEstatus: Liderando")
+    with s2:
+        st.info("**SEDE TOLEDO**\n\nEficiencia: 88%\n\nEstatus: Estable")
+    with s3:
+        st.info("**SEDE TLALPAN**\n\nEficiencia: 82%\n\nEstatus: Alerta")
 
     st.divider()
     
-    # Estatus de Motores
-    st.subheader("⚡ Estatus de Motores de Cobranza")
+    # Motores de Cobranza (Supabase Bridge)
+    st.markdown("### ⚙️ MOTORES DE COBRANZA ACTIVOS")
+    st.code("CONECTADO A BÚNKER ID: jboowhjsaevszlktgkzs", language="bash")
+    
     col_a, col_b, col_c = st.columns(3)
-    col_a.success("✅ TDC INBURSA: ACTIVO")
-    col_b.success("✅ TELCEL: ACTIVO")
-    col_c.warning("⚠️ ICP: AJUSTE DE ESTRATEGIA")
+    col_a.success("🟢 TDC INBURSA")
+    col_b.success("🟢 TELCEL")
+    col_c.warning("🟡 ICP (RECONFIGURANDO)")
