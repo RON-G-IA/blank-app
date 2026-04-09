@@ -27,21 +27,10 @@ with st.sidebar:
 # --- CONTENIDO DINÁMICO (LÓGICA CLAUDE + GPT) ---
 if tab == "📊 HOME / Brincos":
     st.title("War Room: Dashboard de Mando")
-    
-    # KPIs de la Operación
     c1, c2, c3 = st.columns(3)
     c1.metric("META GLOBAL", "$8,000,000", "Abril 2026")
     c2.metric("RECUPERADO HOY", "$529,450", "+6.6%")
     c3.metric("HONORARIOS EST.", "$79,766", "Tasa 17%")
-    
     st.divider()
     st.subheader("Motores Activos en Supabase")
     st.write("✅ TDC INBURSA | ✅ TELCEL | ✅ ICP")
-    st.info("Búnker ID: jboowhjsaevszlktgkzs")
-
-elif tab == "🧪 LAB. ESTRATEGIAS A/B":
-    st.title("Laboratorio de Marcación (GPT Engine)")
-    st.info("Ajuste de intervalos tácticos para Vallejo, Toledo y Tlalpan.")
-    st.select_slider("Intensidad de Marcación:", ["Tipo 1", "Tipo 2", "Tipo 3", "Tipo 4"])
-
-# El resto de las pestañas se irán habilitando automáticamente
