@@ -1,85 +1,102 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
-# 1. CONFIGURACIÓN EJECUTIVA
-st.set_page_config(page_title="ECD-OS v2.0 | GERENCIA DE COBRANZA", layout="wide")
+# 1. CONFIGURACIÓN DE ALTA DIRECCIÓN
+st.set_page_config(page_title="ECD-OS v2.0 | INTELIGENCIA OPERATIVA", layout="wide")
 
-# 2. ESTILO VISUAL DE ALTO NIVEL (LOOK EMPRESARIAL)
+# 2. ESTILO "FINANCIAL TERMINAL" (ALTO IMPACTO)
 st.markdown("""
     <style>
-    .main { background-color: #f8fafc; }
-    [data-testid="stSidebar"] { background-color: #0f172a !important; color: white; }
-    .stMetric { 
-        background-color: #ffffff; 
-        border: 1px solid #e2e8f0; 
-        padding: 20px; 
-        border-radius: 8px; 
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); 
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    .stApp { background-color: #0f172a; font-family: 'Inter', sans-serif; color: #f8fafc; }
+    [data-testid="stSidebar"] { background-color: #020617 !important; border-right: 1px solid #1e293b; }
+    
+    /* Tarjetas de Métricas de Precisión */
+    div[data-testid="stMetric"] {
+        background: #1e293b;
+        border: 1px solid #334155;
+        padding: 20px;
+        border-radius: 4px;
+        border-top: 4px solid #3b82f6;
     }
-    .stHeader { color: #1e293b; font-family: 'Helvetica Neue', sans-serif; }
-    div[data-testid="stMetricValue"] > div { color: #1e40af !important; }
+    
+    h1, h2, h3 { font-weight: 700; color: #ffffff !important; letter-spacing: -1px; }
+    .stTable { background-color: #1e293b; border-radius: 8px; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. IDENTIDAD CORPORATIVA
+# 3. PANEL DE CONTROL LATERAL (IDENTIDAD)
 with st.sidebar:
-    st.image("https://www.freeiconspng.com/uploads/shield-icon-12.png", width=50)
-    st.title("ECD-OS v2.0")
-    st.markdown("---")
-    st.subheader("UNIDAD DE INTELIGENCIA")
-    st.info(f"RESPONSABLE:\n**RONALD CARBAJAL ROMERO**\nGerente de Cobranza")
+    st.markdown("<h2 style='text-align: center;'>🛡️ ECD-OS</h2>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style='background: #1e40af; padding: 15px; border-radius: 5px; margin-bottom: 20px;'>
+            <p style='margin:0; font-size: 0.8rem; opacity: 0.8;'>GERENTE DE COBRANZA</p>
+            <p style='margin:0; font-weight: bold;'>RONALD CARBAJAL ROMERO</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
     st.divider()
-    modulo = st.radio("SISTEMAS ESTRATÉGICOS", [
-        "📈 DASHBOARD EJECUTIVO", 
-        "⛓️ TRAZABILIDAD POR TRAMO",
-        "📊 RANKING DE SEDES",
-        "⚙️ CONTROL DE MOTORES"
+    menu = st.radio("SISTEMAS DE ANÁLISIS", [
+        "📊 CONSOLIDADO NACIONAL", 
+        "📈 TENDENCIAS Y PROYECCIÓN",
+        "⚙️ ARQUITECTURA DE MOTORES"
     ])
 
-# 4. DASHBOARD EJECUTIVO (LO QUE EL DIRECTOR QUIERE VER)
-if modulo == "📈 DASHBOARD EJECUTIVO":
-    st.title("🚀 REPORTE ESTRATÉGICO DE RECUPERACIÓN")
-    st.caption("Consolidado Nacional: Vallejo | Toledo | Tlalpan")
+# 4. MONITOR DE ALTO NIVEL
+if menu == "📊 CONSOLIDADO NACIONAL":
+    st.header("SISTEMA DE MANDO: RECUPERACIÓN ESTRATÉGICA")
+    st.caption("Consolidado Operativo: Vallejo | Toledo | Tlalpan")
     
-    # KPIs FINANCIEROS
+    # KPIs de Impacto Financiero
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("META MENSUAL", "$8,000,000", "Abril 2026")
-    c2.metric("RECUPERACIÓN REAL", "$529,450", "6.6% avance")
-    c3.metric("HONORARIOS (17%)", "$79,766", "Proyectado")
-    c4.metric("PRODUCTIVIDAD", "92.4%", "+2.1% vs Mar")
+    c1.metric("ASIGNACIÓN TOTAL", "$120,000,000", "Q2 2026")
+    c2.metric("OBJETIVO MENSUAL", "$8,000,000", "ABRIL")
+    c3.metric("RECUPERACIÓN REAL", "$529,450", "6.6% EFF")
+    c4.metric("HONORARIOS NETOS", "$79,766", "17% FEE")
 
     st.divider()
 
-    # TABLA DE ANÁLISIS POR SEDE
-    st.subheader("📊 DESEMPEÑO OPERATIVO POR SEDE")
-    data = {
-        "Sede": ["VALLEJO HQ", "TOLEDO", "TLALPAN"],
-        "Cartera": ["TDC Inbursa", "Telcel", "ICP"],
-        "Recuperado": ["$245,000", "$184,450", "$100,000"],
-        "Eficiencia": ["96%", "89%", "78%"],
-        "Tendencia": ["⬆️ Alta", "➡️ Estable", "⬇️ Revisión"]
-    }
-    df = pd.DataFrame(data)
-    st.table(df)
-
-    # GRÁFICO DE BARRAS (Simulado para impacto visual)
-    st.subheader("📈 COMPARATIVA DE RECUPERACIÓN DIARIA")
-    chart_data = pd.DataFrame({
-        'Día': range(1, 8),
-        'Vallejo': [30, 45, 40, 60, 55, 70, 85],
-        'Toledo': [20, 35, 30, 45, 40, 50, 60],
-        'Tlalpan': [10, 20, 15, 25, 22, 30, 35]
-    }).set_index('Día')
-    st.bar_chart(chart_data)
-
-elif modulo == "⚙️ CONTROL DE MOTORES":
-    st.title("⚙️ ESTADO DE MOTORES DE COBRANZA")
-    st.code("CONEXIÓN ENCRIPTADA CON BÚNKER SUPABASE: ACTIVA", language="bash")
+    # Análisis de Salud por Sede
+    col_left, col_right = st.columns([2, 1])
     
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.success("✅ MOTOR TDC INBURSA - OPERANDO AL 100%")
-        st.success("✅ MOTOR TELCEL - OPERANDO AL 100%")
-    with col_b:
-        st.warning("⚠️ MOTOR ICP - RECONFIGURACIÓN DE TRAMOS")
-        st.info("ℹ️ PRÓXIMA CARGA: MAÑANA 08:00 AM")
+    with col_left:
+        st.subheader("📡 DESEMPEÑO POR NODO OPERATIVO")
+        df_sedes = pd.DataFrame({
+            "Sede": ["VALLEJO HQ", "TOLEDO", "TLALPAN"],
+            "Cartera Principal": ["TDC Inbursa", "Telcel", "ICP"],
+            "Meta": ["$4M", "$2.5M", "$1.5M"],
+            "Avance": [0.65, 0.45, 0.30],
+            "Estatus": ["🟢 ÓPTIMO", "🟡 PREVENTIVO", "🔴 CRÍTICO"]
+        })
+        st.data_editor(
+            df_sedes,
+            column_config={
+                "Avance": st.column_config.ProgressColumn("Cumplimiento", min_value=0, max_value=1),
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+
+    with col_right:
+        st.subheader("🎯 MIX DE CARTERA")
+        chart_data = pd.DataFrame(
+            np.random.randn(20, 3),
+            columns=['Inbursa', 'Telcel', 'Walmart']
+        )
+        st.area_chart(chart_data)
+
+    st.divider()
+    
+    # Mensaje de Acción
+    st.warning("⚠️ **ALERTA DIRECTIVA:** Sede Tlalpan requiere ajuste de estrategia en tramos 90+ para alcanzar el 17% de honorarios proyectado.")
+
+# 5. MÓDULO DE MOTORES
+elif menu == "⚙️ ARQUITECTURA DE MOTORES":
+    st.header("⚙️ CONTROL DE MOTORES Y FLUJO DE DATOS")
+    st.code("CONEXIÓN ACTIVA: SUPABASE_CLUSTER_VALLEJO", language="bash")
+    
+    m1, m2, m3 = st.columns(3)
+    m1.success("✅ MOTOR INBURSA\nIntegración API: Activa")
+    m2.success("✅ MOTOR TELCEL\nCarga masiva: Completada")
+    m3.error("❌ MOTOR ICP\nError de segmentación de tramos")
